@@ -25,7 +25,7 @@ class Server {
     }
 
     listen() {
-        this.app.listen(this.port, '0.0.0.0', () => { // Escuchar en todos los interfaces de red
+        this.app.listen(this.port, '0.0.0.0', () => {
             console.log(`Aplicacion corriendo en el puerto ${this.port}`);
         }).on('error', (err: any) => {
             if (err.code === 'EADDRINUSE') {
