@@ -13,11 +13,11 @@ import authRoutes from '../routes/auth';
 
 class Server {
     private app: Application;
-    private port: string;
+    private port: number; // Cambiado a number
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || '3000'; // Usar la variable de entorno PORT
+        this.port = parseInt(process.env.PORT || '3000', 10); // Convertido a number
         this.middlewares();
         this.routes();
         this.dbConnect();
@@ -25,12 +25,12 @@ class Server {
     }
 
     listen() {
-        this.app.listen(this.port, () => {
+        this.app.listen(this.port, '0.0.0.0', () => { // Escuchar en todos los interfaces de red
             console.log(`Aplicacion corriendo en el puerto ${this.port}`);
         }).on('error', (err: any) => {
             if (err.code === 'EADDRINUSE') {
                 console.log(`El puerto ${this.port} está en uso, intentando otro puerto...`);
-                this.port = (parseInt(this.port) + 1).toString();
+                this.port += 1;
                 this.listen();
             } else {
                 console.error('Error al iniciar el servidor:', err);
