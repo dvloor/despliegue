@@ -25,19 +25,15 @@ class Server {
     }
 
     listen() {
-        this.app.listen(this.port, '0.0.0.0', () => {
-            console.log(`Aplicacion corriendo en el puerto ${this.port}`);
+        const port = process.env.PORT || 3000;  // Usa el puerto proporcionado por Railway
+        this.app.listen('0.0.0.0', () => {
+            console.log(`Aplicación corriendo en el puerto ${port}`);
         }).on('error', (err: any) => {
-            if (err.code === 'EADDRINUSE') {
-                console.error(`El puerto ${this.port} está en uso. Probando con otro...`);
-                this.port++;
-                this.listen(); // Intentar con un nuevo puerto
-            } else {
-                console.error('Error al iniciar el servidor:', err);
-                process.exit(1);
-            }
+            console.error('Error al iniciar el servidor:', err);
+            process.exit(1); // Salir del proceso en caso de error
         });
     }
+    
 
     routes() {
         this.app.get('/', (req: Request, res: Response) => {
