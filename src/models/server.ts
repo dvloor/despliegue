@@ -13,11 +13,11 @@ import authRoutes from '../routes/auth';
 
 class Server {
     private app: Application;
-    private port: number; // Cambiado a number
+    private port: number;
 
     constructor() {
         this.app = express();
-        this.port = parseInt(process.env.PORT || '3000', 10); // Convertido a number
+        this.port = parseInt(process.env.PORT || '3000', 10);
         this.middlewares();
         this.routes();
         this.dbConnect();
@@ -51,10 +51,7 @@ class Server {
     }
 
     middlewares() {
-        // Parseamos el body
         this.app.use(express.json());
-
-        // Cors
         this.app.use(cors());
     }
 
