@@ -17,7 +17,7 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = parseInt(process.env.DB_PORT || '3000', 10);
+        this.port = parseInt(process.env.PORT as string, 10); // Solo usar process.env.PORT
         this.middlewares();
         this.routes();
         this.dbConnect();
