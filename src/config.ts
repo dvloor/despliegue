@@ -10,6 +10,6 @@ export const config = {
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASS || '',
     name: process.env.DB_NAME || 'almacen',
-    port: parseInt(process.env.DB_PORT || '3306', 10),
+    PORT: parseInt(process.env.DB_PORT || '3306', 10),
   },
 };
