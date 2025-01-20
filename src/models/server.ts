@@ -17,7 +17,7 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = parseInt(process.env.PORT as string, 10); // Solo usar process.env.PORT
+        this.port = parseInt(process.env.PORT || '8080', 10); // Solo usar process.env.PORT
         this.middlewares();
         this.routes();
         this.dbConnect();
@@ -28,8 +28,14 @@ class Server {
         this.app.listen(this.port, '0.0.0.0', () => {
             console.log(`Aplicacion corriendo en el puerto ${this.port}`);
         }).on('error', (err: any) => {
-            console.error('Error al iniciar el servidor:', err);
-            process.exit(1); // Salir del proceso en caso de error
+            if (err.code === 'EADDRINUSE') {
+                console.error(`El puerto ${this.port} está en uso. Probando con otro...`);
+                this.port++;
+                this.listen(); // Intentar con un nuevo puerto
+            } else {
+                console.error('Error al iniciar el servidor:', err);
+                process.exit(1);
+            }
         });
     }
 
