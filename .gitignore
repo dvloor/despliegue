@@ -13,10 +13,6 @@ npm-debug.log
 yarn-error.log
 .env
 
-# Production
-dist/
-frontend/dist/
-
 # IDEs and editors
 .idea/
 .project
