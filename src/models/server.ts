@@ -29,6 +29,7 @@ class Server {
             console.log(`Aplicacion corriendo en el puerto ${this.port}`);
         }).on('error', (err: any) => {
             console.error('Error al iniciar el servidor:', err);
+            process.exit(1); // Salir del proceso en caso de error
         });
     }
 
