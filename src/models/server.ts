@@ -27,6 +27,14 @@ class Server {
     listen() {
         this.app.listen(this.port, () => {
             console.log(`Aplicacion corriendo en el puerto ${this.port}`);
+        }).on('error', (err: any) => {
+            if (err.code === 'EADDRINUSE') {
+                console.log(`El puerto ${this.port} está en uso, intentando otro puerto...`);
+                this.port = (parseInt(this.port) + 1).toString();
+                this.listen();
+            } else {
+                console.error('Error al iniciar el servidor:', err);
+            }
         });
     }
 
