@@ -11,7 +11,6 @@ import routesOrderDetail from '../routes/order_detail';
 import routesAdmin from '../routes/admin';
 import authRoutes from '../routes/auth';
 
-
 class Server {
     private app: Application;
     private port: string;
@@ -19,38 +18,37 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || '3001';
-        this.listen();
-        this.midlewares();
+        this.middlewares();
         this.routes();
         this.dbConnect();
+        this.listen();
     }
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Aplicacion corriendo en el puerto ${this.port}`)
-        })
+            console.log(`Aplicacion corriendo en el puerto ${this.port}`);
+        });
     }
 
     routes() {
         this.app.get('/', (req: Request, res: Response) => {
             res.json({
                 msg: 'API Working'
-            })
-        })
-        this.app.use('/api/count', routesProducto)
-        this.app.use('/api/products', routesProducto)
-        this.app.use('/api/brands', routesBrand)
-        this.app.use('/api/categories', routesCategory)
-        this.app.use('/api/sizes', routesSize)
-        this.app.use('/api/customers', routesCustomer)
-        this.app.use('/api/orders', routesOrder)
-        this.app.use('/api/order-details', routesOrderDetail)
-        this.app.use('/api/admins', routesAdmin)
+            });
+        });
+
+        this.app.use('/api/products', routesProducto);
+        this.app.use('/api/brands', routesBrand);
+        this.app.use('/api/categories', routesCategory);
+        this.app.use('/api/sizes', routesSize);
+        this.app.use('/api/customers', routesCustomer);
+        this.app.use('/api/orders', routesOrder);
+        this.app.use('/api/order-details', routesOrderDetail);
+        this.app.use('/api/admins', routesAdmin);
         this.app.use('/api/auth', authRoutes);
     }
 
-    midlewares() {
-
+    middlewares() {
         // Parseamos el body
         this.app.use(express.json());
 
@@ -59,19 +57,13 @@ class Server {
     }
 
     async dbConnect() {
-
         try {
             await db.authenticate();
-            console.log('Base de datos conectada')
+            console.log('Base de datos conectada');
         } catch (error) {
-            console.log(error);
-            console.log('Error al conectarse a la base de datos')
+            console.error('No se pudo conectar a la base de datos:', error);
         }
-
-       
     }
-
-
 }
 
 export default Server;
