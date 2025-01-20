@@ -1,21 +1,17 @@
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
+import { config } from '../config.js'; // Importa la configuración
 
-// Cargar variables de entorno desde el archivo .env
-dotenv.config();
+const { host, user, password, name, port } = config.db;
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME as string,
-  process.env.DB_USER as string,
-  process.env.DB_PASS as string,
-  {
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT as string, 10),
-    dialect: 'mysql',
-  }
-);
+const sequelize = new Sequelize(name, user, password, {
+  host: host,
+  port: port,
+  dialect: 'mysql',
+  logging: false, // Desactiva logs para entornos de producción
+});
 
-sequelize.authenticate()
+sequelize
+  .authenticate()
   .then(() => {
     console.log('Conexión establecida exitosamente.');
   })
