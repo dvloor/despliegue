@@ -10,5 +10,5 @@
     "outDir": "./dist",        // Especifica la carpeta de salida para los archivos compilados
     "rootDir": "./src"         // Especifica la carpeta raíz de tu código fuente
   },
-  "include": ["src"]          // Incluye todos los archivos TypeScript en la carpeta src
+  "include": ["src", "src/config.ts"]          // Incluye todos los archivos TypeScript en la carpeta src
 }

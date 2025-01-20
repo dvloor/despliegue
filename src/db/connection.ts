@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { config } from '../config.js'; // Importa la configuración
+import { config } from '../config'; // Importa la configuración
 
 const { host, user, password, name, port } = config.db;
 
