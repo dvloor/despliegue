@@ -17,7 +17,7 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || '3001';
+        this.port = process.env.PORT || '3000'; // Usar la variable de entorno PORT
         this.middlewares();
         this.routes();
         this.dbConnect();
