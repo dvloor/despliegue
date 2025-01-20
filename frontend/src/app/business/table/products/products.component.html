@@ -1,0 +1,128 @@
+<!-- Botón para mostrar el formulario de agregar producto -->
+<button (click)="toggleAddProductForm()" 
+        class="bg-lime-600 text-white px-6 py-2 rounded-lg hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-400 transition duration-150">
+  Agregar Producto
+</button>
+
+<!-- Formulario de agregar producto -->
+<div *ngIf="showAddProductForm" class="mt-4">
+  <form (ngSubmit)="addProduct()" class="flex flex-col gap-4 mb-2">
+    <input 
+      [(ngModel)]="newProduct.name" 
+      name="productName"
+      placeholder="Nombre del producto"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400" 
+      required
+    />
+
+    <input 
+      [(ngModel)]="newProduct.description" 
+      name="productDescription"
+      placeholder="Descripción"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400" 
+      required
+    />
+
+    <input 
+      [(ngModel)]="newProduct.price" 
+      name="productPrice"
+      placeholder="Precio"
+      type="number"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400" 
+      required
+    />
+    
+    <input 
+      [(ngModel)]="newProduct.stock" 
+      name="productStock"
+      placeholder="Stock"
+      type="number"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400" 
+      required
+    />
+    
+    <input 
+      [(ngModel)]="newProduct.discount_price" 
+      name="productDiscountPrice"
+      placeholder="Descuento"
+      type="number"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400" 
+    />
+
+    <!-- Selector de marca -->
+    <select 
+      [(ngModel)]="newProduct.brand.id"
+      name="productBrand"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+      required
+    >
+      <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+    </select>
+
+    <!-- Selector de categoría -->
+    <select 
+      [(ngModel)]="newProduct.category.id"
+      name="productCategory"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+      required
+    >
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+
+    <!-- Selector de tamaño -->
+    <select 
+      [(ngModel)]="newProduct.size.id"
+      name="productSize"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+      required
+    >
+      <option *ngFor="let size of sizes" [value]="size.id">{{ size.size }}</option>
+    </select>
+
+    <button 
+      type="submit" 
+      class="bg-lime-600 text-white px-6 py-2 rounded-lg hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-400 transition duration-150">
+      Agregar Producto
+    </button>
+  </form>
+</div>
+
+<!-- Tabla de productos -->
+<div *ngIf="!showAddProductForm" class="container mx-auto p-6">
+  <div class="flex justify-between items-center mb-3">
+    <h4 class="text-xl font-semibold text-gray-800">Listado de Productos</h4>
+  </div>
+
+  <div class="overflow-auto max-h-[500px] border border-gray-200 shadow-sm">
+    <table *ngIf="listProducts.length > 0" class="table-auto w-full text-left border-collapse">
+      <thead class="bg-gradient-to-t from-slate-300 to-slate-100 border-b border-gray-300 z-10 shadow-md">
+        <tr>
+          <th class="p-3 text-gray-700">Nombre</th>
+          <th class="p-3 text-gray-700">Descripción</th>
+          <th class="p-3 text-gray-700">Precio</th>
+          <th class="p-3 text-gray-700">Stock</th>
+          <th class="p-3 text-gray-700">Descuento</th>
+          <th class="p-3 text-gray-700">Marca</th>
+          <th class="p-3 text-gray-700">Categoría</th>
+          <th class="p-3 text-gray-700">Tamaño</th>
+          <th class="p-3 text-gray-700">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-300">
+        <tr *ngFor="let product of listProducts">
+          <td class="p-3">{{ product.name }}</td>
+          <td class="p-3">{{ product.description }}</td>
+          <td class="p-3">{{ product.price }}</td>
+          <td class="p-3">{{ product.stock }}</td>
+          <td class="p-3">{{ product.discount_price }}</td>
+          <td class="p-3">{{ product.brand.name }}</td>
+          <td class="p-3">{{ product.category.name }}</td>
+          <td class="p-3">{{ product.size.size }}</td>
+          <td class="p-3">
+            <button (click)="deleteProduct(product.id)" class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div *ngIf="!loading" class="container mx-auto p-6 space-y-6">
+  <div class="flex justify-between items-center mb-6">
+    <h4 class="text-2xl font-semibold text-gray-800">Listado de Tamaños</h4>
+  </div>
+
+  <!-- Formulario para agregar un nuevo tamaño -->
+  <form (ngSubmit)="addSize()" class="flex gap-4 mb-6">
+    <input 
+      [(ngModel)]="newSize.size" 
+      name="sizeName"
+      placeholder="Nuevo tamaño"
+      class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400" 
+      required
+    />
+    <button 
+      type="submit" 
+      class="bg-lime-600 text-white px-6 py-2 rounded-lg hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-400 transition duration-150">
+      Agregar Tamaño
+    </button>
+  </form>
+
+  <!-- Tabla de tamaños -->
+  <div class="overflow-auto max-h-[500px] border border-gray-300 shadow-sm">
+    <table *ngIf="listSizes.length > 0" class="table-auto w-full text-left border-collapse">
+      <thead class="sticky top-0 bg-gradient-to-t from-slate-300 to-slate-200 z-10 shadow-md">
+        <tr>
+          <th class="p-3 text-gray-700">ID</th>
+          <th class="p-3 text-gray-700">Tamaño</th>
+          <th class="p-3 text-gray-700">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-300">
+        <tr *ngFor="let size of listSizes" class="hover:bg-gray-200">
+          <td class=" px-4 py-2">{{ size.id }}</td>
+          <td *ngIf="!size.editing" class="border border-gray-300 px-4 py-2">{{ size.size }}</td>
+          <td *ngIf="size.editing" class="border border-gray-300 px-4 py-2">
+            <input [(ngModel)]="size.size" class="border border-gray-300 p-2 rounded w-full" />
+          </td>
+          <td class="border border-gray-300 px-4 py-2 flex gap-2">
+            <button *ngIf="!size.editing" (click)="editSize(size)" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Editar</button>
+            <button *ngIf="size.editing" (click)="saveSize(size)" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Guardar</button>
+            <button *ngIf="size.editing" (click)="cancelEdit(size)" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Cancelar</button>
+            <button (click)="deleteSize(size.id)" class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h5 *ngIf="listSizes.length == 0" class="text-center text-gray-700 mt-4">No hay tamaños para mostrar</h5>
+</div>

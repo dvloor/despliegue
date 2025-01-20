@@ -1,0 +1,42 @@
+<div *ngIf="!loading" class="container mx-auto p-6 space-y-6">
+  <!-- Header Section -->
+  <div class="flex justify-between items-center mb-6">
+    <h4 class="text-2xl font-semibold text-gray-800">Listado de Clientes</h4>
+  </div>
+
+  <!-- Table Section -->
+  <div class="overflow-auto max-h-[550px] border border-gray-300 shadow-sm">
+    <table *ngIf="listCustomers.length > 0" class="table-auto w-full text-left border-collapse">
+      <thead class="sticky top-0 bg-gradient-to-t from-slate-200 to-slate-400 border-b border-gray-300 z-10">
+        <tr class="text-gray-700">
+          <th class="p-4 text-left font-medium">ID</th>
+          <th class="p-4 text-left font-medium">Nombres</th>
+          <th class="p-4 text-left font-medium">Apellidos</th>
+          <th class="p-4 text-left font-medium">Correo Electrónico</th>
+          <th class="p-4 text-left font-medium">Teléfono</th>
+          <th class="p-4 text-left font-medium">Fecha de registro</th>
+          <th class="p-4 text-center font-medium">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-300">
+        <tr *ngFor="let item of listCustomers" class="hover:bg-gray-100 transition-all">
+          <td class="px-4 py-3 border-b border-gray-300">{{ item.id }}</td>
+          <td class="px-4 py-3 border-b border-gray-300">{{ item.name }}</td>
+          <td class="px-4 py-3 border-b border-gray-300">{{ item.lastname }}</td>
+          <td class="px-4 py-3 border-b border-gray-300">{{ item.email }}</td>
+          <td class="px-4 py-3 border-b border-gray-300">{{ item.phone }}</td>
+          <td class="px-4 py-3 border-b border-gray-300">{{ item.signin_date }}</td>
+          <td class="px-4 py-3 border-b border-gray-300 flex justify-center gap-2">
+            <button (click)="deleteCustomer(item.id!)" type="button" 
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition duration-150">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Customers Message -->
+  <h5 *ngIf="listCustomers.length == 0" class="text-center text-gray-700 mt-4">No hay clientes para mostrar</h5>
+</div>

@@ -1,0 +1,70 @@
+<div *ngIf="!loading" class="container mx-auto p-6 space-y-6">
+  <!-- Header Section -->
+  <div class="flex justify-between items-center mb-6">
+    <h4 class="text-2xl font-semibold text-gray-800">Listado de Marcas</h4>
+    <form (ngSubmit)="addBrand()" class="flex gap-4 mb-2">
+      <input 
+        [(ngModel)]="newBrand.name" 
+        name="brandName"
+        placeholder="Nueva marca"
+        class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400" 
+        required
+      />
+      <button 
+        type="submit" 
+        class="bg-lime-600 text-white px-6 py-2 rounded-lg hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-400 transition duration-150">
+        Agregar Marca
+      </button>
+    </form>
+  </div>
+
+  <!-- Table Section -->
+  <div class="overflow-auto max-h-[500px] border border-gray-300 shadow-md rounded-lg">
+    <table *ngIf="listBrands.length > 0" class="table-auto w-full text-left border-collapse">
+      <thead class="sticky top-0 bg-gradient-to-t from-slate-200 to-slate-400 border-b border-gray-300 shadow-md z-10">
+        <tr class="text-gray-700">
+          <th class="p-4 text-left font-medium">ID</th>
+          <th class="p-4 text-left font-medium">Nombre de la marca</th>
+          <th class="p-4 text-center font-medium">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-300">
+        <tr *ngFor="let brand of listBrands" class="hover:bg-gray-100 transition-all">
+          <td class="px-4 py-3 border-b border-gray-300">{{ brand.id }}</td>
+          <td *ngIf="!brand.editing" class="px-4 py-3 border-b border-gray-300">{{ brand.name }}</td>
+          <td *ngIf="brand.editing" class="px-4 py-3 border-b border-gray-300">
+            <input [(ngModel)]="brand.name" class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </td>
+          <td class="px-4 py-3 border-b border-gray-300 flex gap-2 justify-center">
+            <!-- Edit Button -->
+            <button *ngIf="!brand.editing" (click)="editBrand(brand)" 
+              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-150">
+              Editar
+            </button>
+
+            <!-- Save Button -->
+            <button *ngIf="brand.editing" (click)="saveBrand(brand)" 
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-150">
+              Guardar
+            </button>
+
+            <!-- Cancel Button -->
+            <button *ngIf="brand.editing" (click)="cancelEdit(brand)" 
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition duration-150">
+              Cancelar
+            </button>
+
+            <!-- Delete Button -->
+            <button (click)="deleteBrand(brand.id)" 
+              class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-150">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Brands Message -->
+  <h5 *ngIf="listBrands.length == 0" class="text-center text-gray-700 mt-4">No hay marcas para mostrar</h5>
+</div>
